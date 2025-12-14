@@ -1,15 +1,11 @@
 from __future__ import annotations
-
 import string
 import math
 import random
 from abc import ABC, abstractmethod
 
 
-# ===============================
-# CORE VALUE OBJECT
-# ===============================
-
+# Represents a user's password and exposes useful properties
 class Password:
     """Represents a user's password with controlled access."""
 
@@ -53,10 +49,7 @@ class Password:
         return f"Password(masked='{self.masked}', length={self.length})"
 
 
-# ===============================
-# ABSTRACT BASE CLASS
-# ===============================
-
+# Abstract base class defining the analyzer interface
 class AbstractPasswordAnalyzer(ABC):
     """Abstract base class enforcing password analysis interface."""
 
@@ -69,10 +62,7 @@ class AbstractPasswordAnalyzer(ABC):
         raise NotImplementedError
 
 
-# ===============================
-# INHERITANCE + POLYMORPHISM
-# ===============================
-
+# Performs basic password analysis
 class BasicPasswordAnalyzer(AbstractPasswordAnalyzer):
     """Performs basic password strength analysis."""
 
@@ -119,6 +109,7 @@ class BasicPasswordAnalyzer(AbstractPasswordAnalyzer):
         }
 
 
+# Extends the basic analyzer with additional checks
 class AdvancedPasswordAnalyzer(BasicPasswordAnalyzer):
     """Extends analysis with repeated pattern detection."""
 
@@ -138,10 +129,7 @@ class AdvancedPasswordAnalyzer(BasicPasswordAnalyzer):
         return results
 
 
-# ===============================
-# COMPOSITION: POLICY
-# ===============================
-
+# Defines password validation rules
 class PasswordPolicy:
     """Defines password validation rules."""
 
@@ -169,10 +157,7 @@ class PasswordPolicy:
         ])
 
 
-# ===============================
-# COMPOSITION: GENERATOR
-# ===============================
-
+# Generates passwords that follow a policy
 class PasswordGenerator:
     """Generates passwords based on a policy."""
 
@@ -203,10 +188,7 @@ class PasswordGenerator:
                 return password
 
 
-# ===============================
-# COMPOSITION: REPORT
-# ===============================
-
+# Formats analysis results for display
 class PasswordReport:
     """Formats analysis results for display."""
 
@@ -223,19 +205,13 @@ class PasswordReport:
         return "\n".join(lines)
 
 
-# ===============================
-# POLYMORPHIC ENTRY POINT
-# ===============================
-
+# Runs analysis using polymorphism
 def run_analysis(analyzer: AbstractPasswordAnalyzer) -> PasswordReport:
     """Runs analysis using polymorphism."""
     return PasswordReport(analyzer.analyze())
 
 
-# ===============================
-# DEMO
-# ===============================
-
+# Demonstrates system usage
 if __name__ == "__main__":
     policy = PasswordPolicy(min_length=10)
     generator = PasswordGenerator(policy)
